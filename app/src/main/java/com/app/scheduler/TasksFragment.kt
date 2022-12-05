@@ -2,8 +2,10 @@ package com.app.scheduler
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -81,6 +84,23 @@ class TasksFragment : Fragment(){
         classesList[selectedIndex].taskList[classesList[selectedIndex].taskList.size - 1].notes = newTaskNotes.text.toString()
 
         rvAdapter.notifyItemInserted(classesList[selectedIndex].taskList.size - 1)
+
+        val startTime = newDueDate.text.toString() + "T00:00:00"
+        val endTime = newDueDate.text.toString() + "T01:00:00"
+
+        // Parsing the date and time
+        val SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val formattedStartTime = SimpleDateFormat.parse(startTime)
+        val formattedEndTime = SimpleDateFormat.parse(endTime)
+
+        val mIntent = Intent(Intent.ACTION_EDIT)
+        mIntent.type = "vnd.android.cursor.item/event"
+        mIntent.putExtra(CalendarContract.Events.DTSTART, formattedStartTime)
+        mIntent.putExtra("time", true)
+        mIntent.putExtra("rule", "FREQ=YEARLY")
+        mIntent.putExtra(CalendarContract.Events.DTEND, formattedEndTime)
+        mIntent.putExtra(CalendarContract.Events.TITLE, newTaskName.text.toString())
+        startActivity(mIntent)
     }
 
     /*
