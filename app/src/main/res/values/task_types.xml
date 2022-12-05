@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="task_types">
+        <item name="assignment">Assignment</item>
+        <item name="quiz">Quiz</item>
+        <item name="exam">Exam</item>
+    </string-array>
+</resources>
