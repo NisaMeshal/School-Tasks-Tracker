@@ -20,8 +20,8 @@
         android:label="Tasks"
         tools:layout="@layout/fragment_tasks">
         <argument
-            android:name="band_id"
-            android:defaultValue="1"
-            app:argType="integer" />
+            android:name="class_name"
+            android:defaultValue="App Dev"
+            app:argType="string" />
     </fragment>
 </navigation>
