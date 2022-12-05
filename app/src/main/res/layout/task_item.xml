@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/task_title"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:text="TextView"
         android:textSize="25sp"
         android:textAlignment="center"
