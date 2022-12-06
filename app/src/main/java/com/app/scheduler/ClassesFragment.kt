@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.app.NotificationCompat.getExtras
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavType
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,10 @@ class ClassesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if(savedInstanceState != null) {
+            classesList = savedInstanceState.getParcelableArrayList<UserClass>("classes_list") as ArrayList<UserClass>
+        }
+
         //initial data population. Would not be here if the app was deployed.
         classesList.add(UserClass("App Dev", 0))
         classesList.add(UserClass("Database Management", 1))
@@ -28,6 +34,13 @@ class ClassesFragment : Fragment() {
         classesList[0].taskList.add(Task("Quiz 1", LocalDate.of(2022, 11, 1), TASK_TYPE.QUIZ))
         classesList[0].taskList.add(Task("Homework 3", LocalDate.of(2022, 11, 3), TASK_TYPE.ASSIGNMENT))
         classesList[0].taskList.add(Task("Unit 5 Exam", LocalDate.of(2022, 11, 25), TASK_TYPE.EXAM))
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val args = Bundle()
+        args.putParcelableArrayList("classes_list", classesList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

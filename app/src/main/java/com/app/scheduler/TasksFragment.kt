@@ -43,6 +43,10 @@ class TasksFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (savedInstanceState != null) {
+            classesList = savedInstanceState.getParcelableArrayList<UserClass>("classes_list") as ArrayList<UserClass>
+        }
+
         arguments?.let {className = it.getString(ARG_CLASS_ID).toString()}
         arguments?.let { classesList = it.getParcelableArrayList("classes_list")!! }
 
@@ -51,6 +55,13 @@ class TasksFragment : Fragment(){
                 selectedIndex = classesList.indexOf(item)
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val args = Bundle()
+        args.putParcelableArrayList("classes_list" ,classesList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
